@@ -1,6 +1,6 @@
 <project>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>mysql</groupId>
+  <groupId>de.inetsoftware</groupId>
   <artifactId>mysql-connector-java</artifactId>
   <version>@MYSQL_CJ_VERSION@</version>
   <packaging>jar</packaging>
@@ -23,11 +23,11 @@ in this distribution for more details.</comments>
 
   <scm>
     <connection>scm:git:git@github.com:mysql/mysql-connector-j.git</connection>
-    <url>https://github.com/mysql/mysql-connector-j</url>
+    <url>https://github.com/i-net-software/mysql-connector-j</url>
   </scm>
 
   <organization>
-    <name>Oracle Corporation</name>
-    <url>http://www.oracle.com</url>
+    <name>i-net software</name>
+    <url>http://www.inetsoftware.de</url>
   </organization>
 </project>

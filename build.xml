@@ -640,7 +640,7 @@ Java 8 (for JDBC 4+ implementation) is also required. Set the full path to this 
             <attribute name="Implementation-Vendor" value="Oracle" />
 
             <!-- OSGi -->
-            <attribute name="Bundle-Vendor" value="Oracle Corporation" />
+            <attribute name="Bundle-Vendor" value="i-net software GmbH" />
             <attribute name="Bundle-Classpath" value="." />
             <attribute name="Bundle-Version" value="${osgid-version}" />
             <attribute name="Bundle-Name" value="Oracle Corporation's JDBC Driver for MySQL" />
