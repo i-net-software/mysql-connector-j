@@ -157,13 +157,7 @@ com.mysql.jdbc.noCleanBetweenCompiles=yes
     <property name="packageDest" value="${toPackage}/${fullProdName}" />
 
     <!-- Send class files to correct location if running in eclipse. -->
-    <condition property="compiler.output" value="bin" else="${buildDir}/${fullProdName}">
-        <or>
-            <isset property="eclipse.running" />
-            <isset property="eclipse.pdebuild.home" />
-            <contains string="${ant.home}" substring="plugins" />
-        </or>
-    </condition>
+    <property name="compiler.output" value="${buildDir}/${fullProdName}" />
 
     <!-- The following properties are needed for finding JDK5 and JDK8 needed for compile and can be passed on the command line to ant via -D switches. -->
     <property name="com.mysql.jdbc.jdk5" value="/usr/lib/jvm/jdk1.5" />
