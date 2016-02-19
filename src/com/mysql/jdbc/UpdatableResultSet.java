@@ -1470,16 +1470,7 @@ public class UpdatableResultSet extends ResultSetImpl {
         this.updater.clearParameters();
 
         for (int i = 0; i < numFields; i++) {
-            if (this.thisRow.getColumnValue(i) != null) {
-
-                if (this.fields[i].getvalueNeedsQuoting()) {
-                    this.updater.setBytes(i + 1, this.thisRow.getColumnValue(i), this.fields[i].isBinary(), false);
-                } else {
-                    this.updater.setBytesNoEscapeNoQuotes(i + 1, this.thisRow.getColumnValue(i));
-                }
-            } else {
-                this.updater.setNull(i + 1, 0);
-            }
+            this.setParamValue(this.updater, i + 1, this.thisRow, i, this.fields[i].getSQLType());
         }
 
         int numKeys = this.primaryKeyIndicies.size();

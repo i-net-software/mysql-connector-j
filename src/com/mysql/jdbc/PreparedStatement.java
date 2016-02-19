@@ -3904,7 +3904,21 @@ public class PreparedStatement extends com.mysql.jdbc.StatementImpl implements j
                             parameterAsBytes = StringUtils.getBytes(x);
                         }
 
-                        setBytes(parameterIndex, parameterAsBytes);
+                        int numBytes = parameterAsBytes.length;
+                        ByteArrayOutputStream bOut = new ByteArrayOutputStream(numBytes + 2);
+                        bOut.write('\'');
+                        for (int j = 0; j < numBytes; ++j) {
+                            byte b = parameterAsBytes[j];
+                            switch (b) {
+                                case '\'':
+                                    bOut.write('\'');
+                                    //no break
+                                default:
+                                    bOut.write(b);
+                            }
+                        }
+                        bOut.write('\'');
+                        setInternal(parameterIndex, bOut.toByteArray());
                     }
 
                     return;
