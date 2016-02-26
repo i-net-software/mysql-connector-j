@@ -451,11 +451,11 @@ public class UpdatableResultSet extends ResultSetImpl {
 
         if (numKeys == 1) {
             int index = this.primaryKeyIndicies.get(0).intValue();
-            this.setParamValue(this.deleter, 1, this.thisRow, index, this.fields[index].getSQLType());
+            this.setParamValue(this.deleter, 1, this.thisRow, index, this.fields[index]);
         } else {
             for (int i = 0; i < numKeys; i++) {
                 int index = this.primaryKeyIndicies.get(i).intValue();
-                this.setParamValue(this.deleter, i + 1, this.thisRow, index, this.fields[index].getSQLType());
+                this.setParamValue(this.deleter, i + 1, this.thisRow, index, this.fields[index]);
 
             }
         }
@@ -468,14 +468,14 @@ public class UpdatableResultSet extends ResultSetImpl {
 
     }
 
-    private void setParamValue(PreparedStatement ps, int psIdx, ResultSetRow row, int rsIdx, int sqlType) throws SQLException {
+    private void setParamValue(PreparedStatement ps, int psIdx, ResultSetRow row, int rsIdx, Field metadata) throws SQLException {
 
         byte[] val = row.getColumnValue(rsIdx);
         if (val == null) {
             ps.setNull(psIdx, Types.NULL);
             return;
         }
-        switch (sqlType) {
+        switch (metadata.getSQLType()) {
             case Types.NULL:
                 ps.setNull(psIdx, Types.NULL);
                 break;
@@ -492,7 +492,8 @@ public class UpdatableResultSet extends ResultSetImpl {
             case Types.LONGVARCHAR:
             case Types.DECIMAL:
             case Types.NUMERIC:
-                ps.setString(psIdx, row.getString(rsIdx, this.charEncoding, this.connection));
+                String encoding = metadata.getEncoding();
+                ps.setString(psIdx, row.getString(rsIdx, encoding, this.connection));
                 break;
             case Types.DATE:
                 ps.setDate(psIdx, row.getDateFast(rsIdx, this.connection, this, this.fastDefaultCal), this.fastDefaultCal);
@@ -1470,18 +1471,18 @@ public class UpdatableResultSet extends ResultSetImpl {
         this.updater.clearParameters();
 
         for (int i = 0; i < numFields; i++) {
-            this.setParamValue(this.updater, i + 1, this.thisRow, i, this.fields[i].getSQLType());
+            this.setParamValue(this.updater, i + 1, this.thisRow, i, this.fields[i]);
         }
 
         int numKeys = this.primaryKeyIndicies.size();
 
         if (numKeys == 1) {
             int index = this.primaryKeyIndicies.get(0).intValue();
-            this.setParamValue(this.updater, numFields + 1, this.thisRow, index, this.fields[index].getSQLType());
+            this.setParamValue(this.updater, numFields + 1, this.thisRow, index, this.fields[index]);
         } else {
             for (int i = 0; i < numKeys; i++) {
                 int idx = this.primaryKeyIndicies.get(i).intValue();
-                this.setParamValue(this.updater, numFields + i + 1, this.thisRow, idx, this.fields[idx].getSQLType());
+                this.setParamValue(this.updater, numFields + i + 1, this.thisRow, idx, this.fields[idx]);
             }
         }
     }
